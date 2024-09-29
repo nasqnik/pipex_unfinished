@@ -9,6 +9,8 @@
 # include <fcntl.h> // open
 # include <string.h> // strerror
 # include <errno.h> 
+# include <sys/types.h>
+# include <sys/wait.h>
 
 // pipex_utils.c
 int open_file(char *filepath, char mode);
@@ -20,5 +22,6 @@ void free_array(char **array);
 void file_error(char *filepath);
 void function_error(char *message);
 void pipex_error(void);
+void cmd_check_error(char *cmd);
 
 #endif
