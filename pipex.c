@@ -15,6 +15,7 @@ void execute(char *command, char **env)
     }
     else
     {
+        command_array = malloc(2 * sizeof(char *));
         command_path = ft_strdup(command);
         command_array[0] = ft_strdup(command);
         command_array[1] = NULL;
@@ -94,3 +95,14 @@ int main(int argc, char **argv, char **env)
         pipex_error();
     return (0);
 }
+
+
+// int main(int argc, char **argv, char **env)
+// {
+//     (void)argc;
+//     char *command_path;
+
+//     printf("I'm here\n");
+//     command_path = find_path((ft_split(argv[1], ' ')), env);
+//     free(command_path);
+// }
