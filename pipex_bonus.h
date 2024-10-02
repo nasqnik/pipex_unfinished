@@ -21,7 +21,7 @@ void free_array(char **array);
 
 // pipex_errors.c
 void pipex_error(void);
-void function_error(char *message);
+void function_error(char *message, int *pipefd, int flag);
 void file_error(char *filepath);
 void cmd_check_error(char *cmd);
 

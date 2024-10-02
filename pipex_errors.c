@@ -1,14 +1,18 @@
 #include "pipex.h"
 
-void file_error(char *filepath)
+void file_error(char *filepath, int *pipefd, int flag)
 {
+    if (flag == 1 && pipefd != NULL)
+        close_pipe_ends(pipefd);
     ft_printf("pipex: %s: ", filepath);
     ft_printf("%s\n", strerror(errno));
     exit(EXIT_FAILURE);
 }
 
-void function_error(char *message)
+void function_error(char *message, int *pipefd, int flag)
 {
+    if (flag == 1 && pipefd != NULL)
+        close_pipe_ends(pipefd);
     perror(message);
     exit(EXIT_FAILURE);
 }
@@ -20,11 +24,19 @@ void pipex_error(void)
     exit(EXIT_FAILURE);
 }
 
-void cmd_check_error(char *cmd)
+void cmd_check_error(char *cmd, int fd, int *pipefd)
 {
     if (ft_strcmp(cmd, "") == 0)
     {
+        close(fd);
+        close_pipe_ends(pipefd);
         ft_printf("pipex: : command not found\n");
         exit(EXIT_FAILURE);
     }
+}
+
+void close_pipe_ends(int *pipefd)
+{
+    close(pipefd[0]);
+    close(pipefd[1]);
 }

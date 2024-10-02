@@ -1,18 +1,18 @@
 #include "pipex.h"
 
-int open_file(char *filepath, char mode)
+int open_file(char *filepath, char mode, int *pipefd)
 {
     int fd;
 
     fd = 0;
     if (mode == 'R' && access(filepath, R_OK) == -1)
-        file_error(filepath);
+        file_error(filepath, pipefd, 1);
     if (mode == 'R')
         fd = open(filepath, O_RDONLY);
     else if (mode == 'W')
         fd = open(filepath, O_CREAT | O_WRONLY | O_TRUNC, 0644);
     if (fd == -1)    
-        file_error(filepath);
+        file_error(filepath, pipefd, 1);
     return fd;
 }
 

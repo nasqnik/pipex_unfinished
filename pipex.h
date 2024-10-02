@@ -13,15 +13,16 @@
 # include <sys/wait.h>
 
 // pipex_utils.c
-int open_file(char *filepath, char mode);
+int open_file(char *filepath, char mode, int *pipefd);
 char *find_path(char **command_array, char **env);
 char *ft_getenv(char *key, char **env);
 void free_array(char **array);
 
 // pipex_errors.c
-void file_error(char *filepath);
-void function_error(char *message);
+void file_error(char *filepath, int *pipefd, int flag);
+void function_error(char *message, int *pipefd, int flag);
 void pipex_error(void);
-void cmd_check_error(char *cmd);
+void cmd_check_error(char *cmd, int fd, int *pipefd);
+void close_pipe_ends(int *pipefd);
 
 #endif
