@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_bonus_utils.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anikitin <anikitin@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/14 15:25:38 by anikitin          #+#    #+#             */
+/*   Updated: 2024/10/14 15:25:40 by anikitin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex_bonus.h"
 
 int open_file(char *filepath, char mode)
@@ -6,7 +18,7 @@ int open_file(char *filepath, char mode)
 
     fd = 0;
     if (mode == 'R' && access(filepath, R_OK) == -1)
-        file_error(filepath);
+        file_error(filepath, NULL, 0);
     if (mode == 'R')
         fd = open(filepath, O_RDONLY);
     else if (mode == 'W')
@@ -14,7 +26,7 @@ int open_file(char *filepath, char mode)
     else if (mode == 'A')
         fd = open(filepath, O_WRONLY | O_CREAT | O_APPEND, 0777);
     if (fd == -1)    
-        file_error(filepath);
+        file_error(filepath, NULL, 0);
     return fd;
 }
 

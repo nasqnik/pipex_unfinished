@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anikitin <anikitin@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/14 15:25:45 by anikitin          #+#    #+#             */
+/*   Updated: 2024/10/14 15:25:47 by anikitin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PIPEX_BONUS_H
 #define PIPEX_BONUS_H
 
@@ -20,9 +32,10 @@ void free_array(char **array);
 
 
 // pipex_errors.c
-void pipex_error(void);
+void file_error(char *filepath, int *pipefd, int flag);
 void function_error(char *message, int *pipefd, int flag);
-void file_error(char *filepath);
-void cmd_check_error(char *cmd);
+void pipex_error(void);
+void cmd_check_error(char *cmd, int fd, int *pipefd);
+void close_pipe_ends(int *pipefd);
 
 #endif
