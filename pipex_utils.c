@@ -6,76 +6,76 @@
 /*   By: anikitin <anikitin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:04:54 by anikitin          #+#    #+#             */
-/*   Updated: 2024/10/14 15:04:56 by anikitin         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:59:48 by anikitin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int open_file(char *filepath, char mode, int *pipefd)
+int	open_file(char *filepath, char mode, int *pipefd)
 {
-    int fd;
+	int	fd;
 
-    fd = 0;
-    if (mode == 'R' && access(filepath, R_OK) == -1)
-        file_error(filepath, pipefd, 1);
-    if (mode == 'R')
-        fd = open(filepath, O_RDONLY);
-    else if (mode == 'W')
-        fd = open(filepath, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-    if (fd == -1)    
-        file_error(filepath, pipefd, 1);
-    return fd;
+	fd = 0;
+	if (mode == 'R' && access(filepath, R_OK) == -1)
+		file_error(filepath, pipefd, 1);
+	if (mode == 'R')
+		fd = open(filepath, O_RDONLY);
+	else if (mode == 'W')
+		fd = open(filepath, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd == -1)
+		file_error(filepath, pipefd, 1);
+	return (fd);
 }
 
-char *find_path(char **command_array, char **env)
+char	*find_path(char **command_array, char **env)
 {
-    char **all_paths;
-    char *command_path;
-    char *tmp;
-    int i;
+	char	**all_paths;
+	char	*command_path;
+	char	*tmp;
+	int		i;
 
-    all_paths = ft_split(ft_getenv("PATH", env), ':');
-    if (!all_paths)
-        return NULL;
-    i = 0;
-    while (all_paths[i])
-    {
-        tmp = ft_strjoin(all_paths[i], "/");
-        command_path = ft_strjoin(tmp, command_array[0]);
-        free(tmp);
-        if (access(command_path, F_OK | X_OK) == 0)
-        {
-            free_array(all_paths);
-            return (command_path);
-        }
-        free(command_path);
-        i++;
-    }
-    free_array(all_paths);
-    return (NULL);
+	all_paths = ft_split(ft_getenv("PATH", env), ':');
+	if (!all_paths)
+		return (NULL);
+	i = 0;
+	while (all_paths[i])
+	{
+		tmp = ft_strjoin(all_paths[i], "/");
+		command_path = ft_strjoin(tmp, command_array[0]);
+		free(tmp);
+		if (access(command_path, F_OK | X_OK) == 0)
+		{
+			free_array(all_paths);
+			return (command_path);
+		}
+		free(command_path);
+		i++;
+	}
+	free_array(all_paths);
+	return (NULL);
 }
 
-
-char *ft_getenv(char *key, char **env)
+char	*ft_getenv(char *key, char **env)
 {
-    int i;
-    int key_length;
+	int	i;
+	int	key_length;
 
-    i = 0;
-    key_length = ft_strlen(key);
-    while (env[i])
-    {
-        if (ft_strncmp(env[i], key, key_length) == 0 && env[i][key_length] == '=')
-            return (env[i] + key_length + 1);
-        i++;
-    }
-    return (NULL);
+	i = 0;
+	key_length = ft_strlen(key);
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], key, key_length) == 0
+			&& env[i][key_length] == '=')
+			return (env[i] + key_length + 1);
+		i++;
+	}
+	return (NULL);
 }
 
-void free_array(char **array)
+void	free_array(char **array)
 {
-    int	i;
+	int	i;
 
 	i = -1;
 	while (array[++i])
@@ -83,4 +83,8 @@ void free_array(char **array)
 	free(array);
 }
 
-
+void	close_pipe_ends(int *pipefd)
+{
+	close(pipefd[0]);
+	close(pipefd[1]);
+}

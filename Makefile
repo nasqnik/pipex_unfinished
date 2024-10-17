@@ -5,12 +5,12 @@ RM 			= rm -rf
 NAME 		= pipex
 HEADER 		= pipex.h
 
-SRC			= pipex.c	pipex_utils.c	pipex_errors.c
+SRC			= pipex.c	pipex_utils.c	pipex_errors.c	pipex_more_errors.c 
 OBJ			= $(SRC:%.c=%.o)
 
 BONUS		= pipex
 BONUS_H		= pipex_bonus.h
-BONUS_SRC	= pipex_bonus.c	pipex_bonus_utils.c	pipex_errors.c
+BONUS_SRC	= pipex_bonus.c	pipex_bonus_utils.c	pipex_errors.c pipex_more_errors.c pipex_here_doc.c
 BONUS_OBJ = $(BONUS_SRC:.c=.o)
 
 LIBFT		=	libft/libft.a
